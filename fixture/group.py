@@ -3,13 +3,13 @@ class GroupHelper:
     def __init__(self, app):
         self.app = app
 
-    def opem_group_page(self):
+    def open_group_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
 
     def create(self, group):
         wd = self.app.wd
-        self.opem_group_page()
+        self.open_group_page()
         # init group creation
         wd.find_element_by_name("new").click()
         # fill group form
@@ -28,7 +28,7 @@ class GroupHelper:
 
     def delete_first_group(self):
         wd = self.app.wd
-        self.opem_group_page()
+        self.open_group_page()
         # select first group
         wd.find_element_by_name("selected[]").click()
         # submit deletion
