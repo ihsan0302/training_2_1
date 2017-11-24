@@ -2,6 +2,9 @@ from model.contact import Contact
 
 
 def test_modify_first_contact_firstname(app):
+    if app.contact.count() == 0:
+        app.contact.create(Contact(firstname="RRR"))
+        app.contact.return_to_homepage()
     app.contact.modify_first_contact(Contact(firstname="James"))
     app.contact.return_to_homepage()
 
