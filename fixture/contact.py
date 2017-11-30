@@ -64,7 +64,8 @@ class ContactHelper:
 
     def return_to_homepage(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home page").click()
+        if not (wd.current_url.endswith("/addressbook") and len(wd.find_elements_by_name("to_group")) > 0):
+            wd.find_element_by_link_text("home page").click()
 
     def count(self):
         wd = self.app.wd
