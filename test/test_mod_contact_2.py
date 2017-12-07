@@ -6,5 +6,12 @@ def test_modify_first_contact_nickname(app):
         app.contact.create(Contact(firstname="Jacob", middlename="Kanstantyn", lastname="Kolas", nickname="Lesavik",
                                company="New Land", title="Sir", adress="Minsk", mobile="+987654321", email="test@kolas.by"))
         app.contact.return_to_homepage()
-    app.contact.modify_first_contact_2(Contact(nickname="  "))
+    old_contacts = app.contact.get_contact_list()
+    contact = Contact(firstname="South", lastname="North")
+    contact.id = old_contacts[0].id
+    app.contact.modify_first_contact_2(contact)
     app.contact.return_to_homepage()
+    new_contacts = app.contact.get_contact_list()
+    assert len(old_contacts) == len(new_contacts)
+    old_contacts[0] = contact
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
