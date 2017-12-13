@@ -7,11 +7,11 @@ def test_modify_some_group(app):
     old_groups = app.group.get_group_list()
     index = randrange(len(old_groups))
     group = Group(name="BBB")
-    group.id = old_groups [index].id
+    group.id = old_groups[index].id
     app.group.modify_group_by_index(index, group)
     assert len(old_groups) == app.group.count()
     new_groups = app.group.get_group_list()
-    old_groups [index] = group
+    old_groups[index] = group
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 # def test_modify_first_group_header(app):
