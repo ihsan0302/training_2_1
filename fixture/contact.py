@@ -51,6 +51,15 @@ class ContactHelper:
         wd.find_element_by_link_text("home").click()
         self.contact_cache = None
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
+        # submit deletion
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        wd.switch_to_alert().accept()
+        wd.find_element_by_link_text("home").click()
+        self.contact_cache = None
+
     def modify_first_contact(self, new_contact_data):
         self.modify_contact_by_index(0, new_contact_data)
 
@@ -63,12 +72,25 @@ class ContactHelper:
         wd.find_element_by_name("update").click()
         self.contact_cache = None
 
+    def modify_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        # edit contact form
+        wd.find_element_by_xpath("//td/input[@value='%s']/../..//img[@title='Edit']" % id).click()
+        self.fill_contact_form(new_contact_data)
+        # submit contact edition
+        wd.find_element_by_name("update").click()
+        self.contact_cache = None
+
     def select_first_contact(self):
         self.select_contact_by_index(0)
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def modify_first_contact_2(self, new_contact_data):
         self.modify_contact_by_index_2(0, new_contact_data)
@@ -77,6 +99,17 @@ class ContactHelper:
         wd = self.app.wd
         # show first contact details
         wd.find_elements_by_xpath("//table[@id='maintable']//img[@title='Details']")[index].click()
+        # edit contact form
+        wd.find_element_by_name("modifiy").click()
+        self.fill_contact_form(new_contact_data)
+        # submit contact edition
+        wd.find_element_by_name("update").click()
+        self.contact_cache = None
+
+    def modify_contact_by_id_2(self, id, new_contact_data):
+        wd = self.app.wd
+        # show first contact details
+        wd.find_element_by_xpath("//td/input[@value='%s']/../..//img[@title='Details']" % id).click()
         # edit contact form
         wd.find_element_by_name("modifiy").click()
         self.fill_contact_form(new_contact_data)
